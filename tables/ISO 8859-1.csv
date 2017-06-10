@@ -1,0 +1,189 @@
+0u21                33           exclam                                                          
+0u22                34           quotedbl                                                        
+0u23                35           numbersign                                                      
+0u24                36           dollar                                                          
+0u25                37           percent                                                         
+0u26                38           ampersand                                                       
+0u27                39           quotesingle                                                     
+0u28                40           parenleft                                                       
+0u29                41           parenright                                                      
+0u2A                42           asterisk                                                        
+0u2B                43           plus                                                            
+0u2C                44           comma                                                           
+0u2D                45           hyphen                                                          
+0u2E                46           period                                                          
+0u2F                47           slash                                                           
+0u30                48           zero                                                            
+0u31                49           one                                                             
+0u32                50           two                                                             
+0u33                51           three                                                           
+0u34                52           four                                                            
+0u35                53           five                                                            
+0u36                54           six                                                             
+0u37                55           seven                                                           
+0u38                56           eight                                                           
+0u39                57           nine                                                            
+0u3A                58           colon                                                           
+0u3B                59           semicolon                                                       
+0u3C                60           less                                                            
+0u3D                61           equal                                                           
+0u3E                62           greater                                                         
+0u3F                63           question                                                        
+0u40                64           at                                                              
+0u41                65           A_upper                    Au                                   
+0u42                66           B_upper                    Bu                                   
+0u43                67           C_upper                    Cu                                   
+0u44                68           D_upper                    Du                                   
+0u45                69           E_upper                    Eu                                   
+0u46                70           F_upper                    Fu                                   
+0u47                71           G_upper                    Gu                                   
+0u48                72           H_upper                    Hu                                   
+0u49                73           I_upper                    Iu                                   
+0u4A                74           J_upper                    Ju                                   
+0u4B                75           K_upper                    Ku                                   
+0u4C                76           L_upper                    Lu                                   
+0u4D                77           M_upper                    Mu                                   
+0u4E                78           N_upper                    Nu                                   
+0u4F                79           O_upper                    Ou                                   
+0u50                80           P_upper                    Pu                                   
+0u51                81           Q_upper                    Qu                                   
+0u52                82           R_upper                    Ru                                   
+0u53                83           S_upper                    Su                                   
+0u54                84           T_upper                    Tu                                   
+0u55                85           U_upper                    Uu                                   
+0u56                86           V_upper                    Vu                                   
+0u57                87           W_upper                    Wu                                   
+0u58                88           X_upper                    Xu                                   
+0u59                89           Y_upper                    Yu                                   
+0u5A                90           Z_upper                    Zu                                   
+0u5B                91           bracketleft                                                     
+0u5C                92           backslash                                                       
+0u5D                93           bracketright                                                    
+0u5E                94           asciicircum                                                     
+0u5F                95           underscore                                                      
+0u60                96           grave                                                           
+0u61                97           a_lower                    al                                   
+0u62                98           b_lower                    bl                                   
+0u63                99           c_lower                    cl                                   
+0u64               100           d_lower                    dl                                   
+0u65               101           e_lower                    el                                   
+0u66               102           f_lower                    fl                                   
+0u67               103           g_lower                    gl                                   
+0u68               104           h_lower                    hl                                   
+0u69               105           i_lower                    il                                   
+0u6A               106           j_lower                    jl                                   
+0u6B               107           k_lower                    kl                                   
+0u6C               108           l_lower                    ll                                   
+0u6D               109           m_lower                    ml                                   
+0u6E               110           n_lower                    nl                                   
+0u6F               111           o_lower                    ol                                   
+0u70               112           p_lower                    pl                                   
+0u71               113           q_lower                    ql                                   
+0u72               114           r_lower                    rl                                   
+0u73               115           s_lower                    sl                                   
+0u74               116           t_lower                    tl                                   
+0u75               117           u_lower                    ul                                   
+0u76               118           v_lower                    vl                                   
+0u77               119           w_lower                    wl                                   
+0u78               120           x_lower                    xl                                   
+0u79               121           y_lower                    yl                                   
+0u7A               122           z_lower                    zl                                   
+0u7B               123           braceleft                                                       
+0u7C               124           bar                                                             
+0u7D               125           braceright                                                      
+0u7E               126           asciitilde                                                      
+0uA1               161           exclamdown                                                      
+0uA2               162           cent                                                            
+0uA3               163           sterling                                                        
+0uA4               164           currency                                                        
+0uA5               165           yen                                                             
+0uA6               166           brokenbar                                                       
+0uA7               167           section                                                         
+0uA8               168           dieresis                                                        
+0uA9               169           copyright                                                       
+0uAA               170           ordfeminine                                                     
+0uAB               171           guillemotleft                                                   
+0uAC               172           logicalnot                                                      
+0uAD               173           uni00AD                                                         
+0uAE               174           registered                                                      
+0uAF               175           macron                                                          
+0uB0               176           degree                                                          
+0uB1               177           plusminus                                                       
+0uB2               178           uni00B2                                                         
+0uB3               179           uni00B3                                                         
+0uB4               180           acute                                                           
+0uB5               181           mu                                                              
+0uB6               182           paragraph                                                       
+0uB7               183           periodcentered                                                  
+0uB8               184           cedilla                                                         
+0uB9               185           uni00B9                                                         
+0uBA               186           ordmasculine                                                    
+0uBB               187           guillemotright                                                  
+0uBC               188           onequarter                                                      
+0uBD               189           onehalf                                                         
+0uBE               190           threequarters                                                   
+0uBF               191           questiondown                                                    
+0uC0               192           Agrave                     Agrave_upper                         Agraveu    
+0uC1               193           Aacute                     Aacute_upper                         Aacuteu    
+0uC2               194           Acircumflex                Acircumflex_upper                    Acircumflex
+0uC3               195           Atilde                     Atilde_upper                         Atildeu    
+0uC4               196           Adieresis                  Adieresis_upper                      Adieresisu 
+0uC5               197           Aring                      Aring_upper                          Aringu     
+0uC6               198           AE                         AE_upper                             AEu        
+0uC7               199           Ccedilla                   Ccedilla_upper                       Ccedillau  
+0uC8               200           Egrave                     Egrave_upper                         Egraveu    
+0uC9               201           Eacute                     Eacute_upper                         Eacuteu    
+0uCA               202           Ecircumflex                Ecircumflex_upper                    Ecircumflex
+0uCB               203           Edieresis                  Edieresis_upper                      Edieresisu 
+0uCC               204           Igrave                     Igrave_upper                         Igraveu    
+0uCD               205           Iacute                     Iacute_upper                         Iacuteu    
+0uCE               206           Icircumflex                Icircumflex_upper                    Icircumflex
+0uCF               207           Idieresis                  Idieresis_upper                      Idieresisu 
+0uD0               208           Eth                        Eth_upper                            Ethu       
+0uD1               209           Ntilde                     Ntilde_upper                         Ntildeu    
+0uD2               210           Ograve                     Ograve_upper                         Ograveu    
+0uD3               211           Oacute                     Oacute_upper                         Oacuteu    
+0uD4               212           Ocircumflex                Ocircumflex_upper                    Ocircumflex
+0uD5               213           Otilde                     Otilde_upper                         Otildeu    
+0uD6               214           Odieresis                  Odieresis_upper                      Odieresisu 
+0uD7               215           multiply                                                        
+0uD8               216           Oslash                     Oslash_upper                         Oslashu    
+0uD9               217           Ugrave                     Ugrave_upper                         Ugraveu    
+0uDA               218           Uacute                     Uacute_upper                         Uacuteu    
+0uDB               219           Ucircumflex                Ucircumflex_upper                    Ucircumflex
+0uDC               220           Udieresis                  Udieresis_upper                      Udieresisu 
+0uDD               221           Yacute                     Yacute_upper                         Yacuteu    
+0uDE               222           Thorn                      Thorn_upper                          Thornu     
+0uDF               223           germandbls                                                      
+0uE0               224           agrave                     agrave_lower                         agravel    
+0uE1               225           aacute                     aacute_lower                         aacutel    
+0uE2               226           acircumflex                acircumflex_lower                    acircumflex
+0uE3               227           atilde                     atilde_lower                         atildel    
+0uE4               228           adieresis                  adieresis_lower                      adieresisl 
+0uE5               229           aring                      aring_lower                          aringl     
+0uE6               230           ae                         ae_lower                             ael        
+0uE7               231           ccedilla                   ccedilla_lower                       ccedillal  
+0uE8               232           egrave                     egrave_lower                         egravel    
+0uE9               233           eacute                     eacute_lower                         eacutel    
+0uEA               234           ecircumflex                ecircumflex_lower                    ecircumflex
+0uEB               235           edieresis                  edieresis_lower                      edieresisl 
+0uEC               236           igrave                     igrave_lower                         igravel    
+0uED               237           iacute                     iacute_lower                         iacutel    
+0uEE               238           icircumflex                icircumflex_lower                    icircumflex
+0uEF               239           idieresis                  idieresis_lower                      idieresisl 
+0uF0               240           eth                        eth_lower                            ethl       
+0uF1               241           ntilde                     ntilde_lower                         ntildel    
+0uF2               242           ograve                     ograve_lower                         ogravel    
+0uF3               243           oacute                     oacute_lower                         oacutel    
+0uF4               244           ocircumflex                ocircumflex_lower                    ocircumflex
+0uF5               245           otilde                     otilde_lower                         otildel    
+0uF6               246           odieresis                  odieresis_lower                      odieresisl 
+0uF7               247           divide                     divide_lower                         dividel    
+0uF8               248           oslash                     oslash_lower                         oslashl    
+0uF9               249           ugrave                     ugrave_lower                         ugravel    
+0uFA               250           uacute                     uacute_lower                         uacutel    
+0uFB               251           ucircumflex                ucircumflex_lower                    ucircumflex
+0uFC               252           udieresis                  udieresis_lower                      udieresisl 
+0uFD               253           yacute                     yacute_lower                         yacutel    
+0uFE               254           thorn                      thorn_lower                          thornl     
+0uFF               255           ydieresis                  ydieresis_lower                      ydieresisl 

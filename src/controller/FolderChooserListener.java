@@ -14,17 +14,17 @@ import view.NorthPanel;
 public class FolderChooserListener implements ActionListener {
 
 	JFrame grandparent;
-	NorthPanel parent;	
+	NorthPanel northpanel;	
 	
 	public FolderChooserListener(NorthPanel parent, JFrame grandparent) {
-		this.parent = parent;
+		this.northpanel = parent;
 		this.grandparent = grandparent;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JLabel lblSelectAFolder = parent.getLblSelectAFolder();
-		// TODO Auto-generated method stub
+		northpanel.getMainPanel().resetCharacters();
+		JLabel lblSelectAFolder = northpanel.getLblSelectAFolder();
 		JFileChooser folderChooser = new JFileChooser();
 		folderChooser.setCurrentDirectory(new java.io.File("~"));
 		folderChooser.setDialogTitle("Choose Directory");
@@ -37,11 +37,11 @@ public class FolderChooserListener implements ActionListener {
 				} else {
 					dir = folderChooser.getCurrentDirectory();
 				}
-				parent.setDir(dir);
+				northpanel.setDir(dir);
 				String dirname = dir.getAbsolutePath() + "/resized";
 				File destDir = new File(dirname);
 				destDir.mkdir();
-				parent.setDestDir(destDir);
+				northpanel.setDestDir(destDir);
 
 				File[] fileList = dir.listFiles();
 				ArrayList<File> updatedFileList = new ArrayList<File>();
@@ -49,10 +49,10 @@ public class FolderChooserListener implements ActionListener {
 					if(f.toString().toLowerCase().endsWith(".svg"))
 						updatedFileList.add(f);
 				File[] updatedFileListArray = updatedFileList.toArray(new File[updatedFileList.size()]);
-				parent.setFiles(updatedFileListArray);
-				parent.getLblFilesFoundNumber().setText("" + fileList.length);
-				parent.getLblSvgFilesFoundNumber().setText("" + updatedFileList.size());
-				parent.getMainPanel().updateFileList(updatedFileListArray);
+				northpanel.setFiles(updatedFileListArray);
+				northpanel.getLblFilesFoundNumber().setText("" + fileList.length);
+				northpanel.getLblSvgFilesFoundNumber().setText("" + updatedFileList.size());
+				northpanel.getMainPanel().updateFileList(updatedFileListArray);
 		} else {
 			lblSelectAFolder.setText("No Directory Selected");
 		}

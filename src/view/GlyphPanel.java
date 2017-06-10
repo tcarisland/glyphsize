@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,17 +33,22 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	CenterPanel parent;
 	Glyph glyph;
 	JCheckBox export;
-	JLabel unicodeLabel;
+	
+	JLabel mappingLabel;
 	JLabel imageLabel;
-	JLabel numberLabel;
 	JLabel filenameLabel;
 	JLabel duplicatesLabel;
 	JLabel heightLabel;
 	JLabel widthLabel;
-	JPanel dimensionsPanel;
+	JLabel numberLabel;
+	
 	JDialog setUnicodeDialog;
 	JButton setUnicodeButton;
+
 	JPanel contentPane;
+	JPanel imagePanel;
+	JPanel dimensionsPanel;
+
 	File file;
 	static int counter = 0;
 	int number;
@@ -59,16 +65,21 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 		current = this;
 		this.parent = parent;
 		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 		this.file = f;
 		glyph = new Glyph(f, table);
 		contentPane = this.createContentPane(f, glyph);
 		this.unmark();
-		add(contentPane, BorderLayout.CENTER);
-		add(imageLabel, BorderLayout.EAST);
+		this.populateGlyphPanel(contentPane, imagePanel);
 	}
 	
+	public static void resetCounter() {
+		counter = 0;
+	}
 	
+	public void populateGlyphPanel(JPanel contentPane, JPanel imagePanel) {
+		add(contentPane, BorderLayout.CENTER);
+		add(imagePanel, BorderLayout.EAST);
+	}
 	
 	public JPanel createContentPane(File f, Glyph glyph) {
 		JPanel contentPane = new JPanel();
@@ -80,18 +91,25 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	}
 	
 	public JComponent[] createComponents(File f, Glyph glyph) {
-		numberLabel = createNumberLabel(number);
-		imageLabel = createImageLabel(f);
+		numberLabel = this.createNumberLabel();
+		imagePanel = createImagePanel(f);
 		export = createExportCheckBox(glyph);
 		filenameLabel = this.createFilenameLabel(f.getName());
-		unicodeLabel = createUnicodeLabel(glyph);
+		mappingLabel = createMappingLabel(glyph);
 		setUnicodeButton = createSetUnicodeButton();
 		duplicatesLabel = this.createDuplicatesLabel();
 		dimensionsPanel = this.createDimensionsPanel(f);
-		return new JComponent[]{numberLabel, imageLabel, export, filenameLabel, unicodeLabel, setUnicodeButton, duplicatesLabel, dimensionsPanel};
-		//centerComponents();
+		return new JComponent[]{numberLabel, export, filenameLabel, mappingLabel, setUnicodeButton, duplicatesLabel, dimensionsPanel};
 	}
 	
+	private JLabel createNumberLabel() {
+		numberLabel = new JLabel("" + this.getNumber());
+		Font labelFont = numberLabel.getFont();
+		numberLabel.setFont(new Font(labelFont.getName(), Font.PLAIN, labelFont.getSize()*2));
+		numberLabel.setName("Number");
+		return numberLabel;
+	}
+
 	private JPanel createDimensionsPanel(File f) {
 		viewbox = this.getGlyph().getViewbox();
 		dimensionsPanel = new JPanel(new GridLayout(1, 1));
@@ -101,24 +119,22 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 		dimensionsPanel.setName("Dimensions");
 		return dimensionsPanel;
 	}
-	
-	private JLabel createNumberLabel(int number2) {
-		JLabel numberLabel = new JLabel("" + number2);
-		numberLabel.setName("Number");
-		return numberLabel;
-	}
 
 	public void centerComponents() {
 		export.setHorizontalAlignment(SwingConstants.CENTER);
 		filenameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		unicodeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		mappingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		setUnicodeButton.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	
 	public JPanel populateContentPane(JPanel contentPane, JComponent[] components) {
 		for(JComponent jc : components) {
-			JPanel wrapper = new JPanel(new BorderLayout());
-			wrapper.add(jc, BorderLayout.CENTER);
+			JPanel wrapper = new JPanel(new GridLayout(1, 1));
+			if(jc instanceof JLabel) {
+				JLabel l = (JLabel) jc;
+				l.setHorizontalAlignment(SwingConstants.CENTER);
+			}
+			wrapper.add(jc);
 			wrapper.setBorder(BorderFactory.createTitledBorder(jc.getName()));
 			contentPane.add(wrapper);
 		}
@@ -145,10 +161,11 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	}
 	
 	
-	public JLabel createUnicodeLabel(Glyph glyph) {
-		JLabel unicodeLabel = new JLabel(glyph.getUnicode());		
-		unicodeLabel.setName("Unicode");
-		return unicodeLabel;
+	public JLabel createMappingLabel(Glyph glyph) {
+		char character = (char) glyph.getUnicodeNumber();
+		JLabel mappingLabel = new JLabel("" + glyph.getUnicode() + " " + character);		
+		mappingLabel.setName("Character Mapping");
+		return mappingLabel;
 	}
 	
 	public JCheckBox createExportCheckBox(Glyph glyph) {
@@ -161,19 +178,31 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 		return export;
 	}
 	
+	public JPanel createImagePanel(File f) {
+		imagePanel = new JPanel();
+		imagePanel.setBorder(BorderFactory.createTitledBorder("Preview"));
+		imageLabel = this.createImageLabel(f);
+		imagePanel.add(imageLabel);
+		return imagePanel;
+	}
+	
 	public JLabel createImageLabel(File f) {
-		JLabel imageLabel = new JLabel("");
+		imageLabel = new JLabel("");
 		imageLabel.setName("Preview");
 		imageLabel.setSize(100, 100);
 		imageLabel.setOpaque(true);
 		imageLabel.setBackground(Color.WHITE);
-		imageLabel.setIcon(new ImageIcon(BufferedImageTranscoder.loadImage(f, 100, 100)));
+		updateImageLabel(f);
 		return imageLabel;
+	}
+	
+	public void updateImageLabel(File f) {
+		imageLabel.setIcon(new ImageIcon(BufferedImageTranscoder.loadImage(f, 100, 100)));
 	}
 
 	public void setUnicode(String s) {
 		glyph.setUnicode(s);
-		unicodeLabel.setText(s);
+		mappingLabel.setText(s);
 	}
 	
 	public boolean isSelected() {
@@ -215,7 +244,6 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 			setUnicodePanel.setLayout(new GridLayout((sum / cols) + mod, cols));
 			for(i = a; i <= b; i++) {
 				JPanel rowPanel = new JPanel();
-				rowPanel.setBorder(BorderFactory.createEtchedBorder());
 				rowPanel.setLayout(new GridLayout(1, 2));
 				String s1 = CharacterLookup.numToUnicodeString(i);
 				String s2 = "" + (char) i;
@@ -227,7 +255,6 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 			}
 			for(i = c; i <= d; i++) {
 				JPanel rowPanel = new JPanel();
-				rowPanel.setBorder(BorderFactory.createEtchedBorder());
 				rowPanel.setLayout(new GridLayout(1, 2));
 				String s1 = CharacterLookup.numToUnicodeString(i);
 				String s2 = "" + (char) i;
@@ -263,14 +290,14 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 			setUnicodeDialog.setVisible(false);
 			export.setSelected(true);
 			String unicode = CharacterLookup.numToUnicodeString(number);
-			unicodeLabel.setText(unicode);
+			mappingLabel.setText(unicode);
 			if(current.isDuplicate())
 				unmark();
 			parent.removeMapping(current);
 			glyph.setUnicode(unicode);
-			imageLabel.setIcon(new ImageIcon(BufferedImageTranscoder.loadImage(file, 100, 100)));
-			add(imageLabel, BorderLayout.EAST);
 			parent.checkDuplicate(current);
+			current.updateImageLabel(current.getFile());
+			current.getImagePanel().add(current.getImageLabel());
 			validate();
 			setUnicodeDialog.dispose();
 		}
@@ -293,16 +320,16 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	
 	public void markDuplicate() {
 		this.setDuplicate(true);
-		this.unicodeLabel.setOpaque(true);
-		this.unicodeLabel.setBackground(Color.RED);
+		this.mappingLabel.setOpaque(true);
+		this.mappingLabel.setBackground(Color.RED);
 		this.repaint();
 	}
 	
 	public void unmark() {
 		this.setDuplicate(false);
 		this.getDuplicatesLabel().setText("No Duplicates");
-		this.unicodeLabel.setOpaque(false);
-		this.unicodeLabel.setBackground(Color.WHITE);
+		this.mappingLabel.setOpaque(false);
+		this.mappingLabel.setBackground(Color.WHITE);
 		this.imageLabel.setIcon(new ImageIcon(BufferedImageTranscoder.loadImage(file, 100, 100)));
 		this.repaint();
 	}
@@ -318,7 +345,6 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	 * @param number the number to set
 	 */
 	public void setNumber(int number) {
-		numberLabel.setText("" + number);
 		this.number = number;
 	}
 
@@ -361,6 +387,34 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	 */
 	public void setDuplicate(boolean isDuplicate) {
 		this.isDuplicate = isDuplicate;
+	}
+
+	/**
+	 * @return the imagePanel
+	 */
+	public JPanel getImagePanel() {
+		return imagePanel;
+	}
+
+	/**
+	 * @param imagePanel the imagePanel to set
+	 */
+	public void setImagePanel(JPanel imagePanel) {
+		this.imagePanel = imagePanel;
+	}
+
+	/**
+	 * @return the imageLabel
+	 */
+	public JLabel getImageLabel() {
+		return imageLabel;
+	}
+
+	/**
+	 * @param imageLabel the imageLabel to set
+	 */
+	public void setImageLabel(JLabel imageLabel) {
+		this.imageLabel = imageLabel;
 	}
 	
 }

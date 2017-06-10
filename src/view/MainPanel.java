@@ -12,26 +12,35 @@ public class MainPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 3845633522635847677L;
-	JFrame parent;
+	private JFrame parentFrame;
 	private CenterPanel centerPanel;
 	private NorthPanel northPanel;
+	private SouthPanel southPanel;
 	
 	/**
 	 * Create the panel.
 	 */
-	public MainPanel(JFrame parent) {
-		this.parent = parent;
+	public MainPanel(JFrame parentFrame) {
+		this.setParentFrame(parentFrame);
 		this.setLayout(new BorderLayout());
-		centerPanel = new CenterPanel(this, parent);
-		northPanel = new NorthPanel(this, parent);
+		setCenterPanel(new CenterPanel(this, parentFrame));
+		setSouthPanel(new SouthPanel(this, parentFrame));
+		setNorthPanel(new NorthPanel(this, parentFrame));
+		southPanel.setActionListeners();
 		this.add(northPanel, BorderLayout.NORTH);
 		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(southPanel,  BorderLayout.SOUTH);
 	}
 
+	public void resetCharacters() {
+		GlyphPanel.resetCounter();
+		this.getCenterPanel().removeCharacters();
+	}
+	
 	public void updateFileList(File[] fileList) {
 		centerPanel.updateFileListArea(fileList);
 	}
-
+	
 	/**
 	 * @return the centerPanel
 	 */
@@ -58,6 +67,28 @@ public class MainPanel extends JPanel {
 	 */
 	public void setNorthPanel(NorthPanel northPanel) {
 		this.northPanel = northPanel;
+	}
+
+	/**
+	 * @return the parentFrame
+	 */
+	public JFrame getParentFrame() {
+		return parentFrame;
+	}
+
+	/**
+	 * @param parentFrame the parentFrame to set
+	 */
+	public void setParentFrame(JFrame parentFrame) {
+		this.parentFrame = parentFrame;
+	}
+
+	public SouthPanel getSouthPanel() {
+		return southPanel;
+	}
+
+	public void setSouthPanel(SouthPanel southPanel) {
+		this.southPanel = southPanel;
 	}
 
 }

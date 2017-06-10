@@ -49,6 +49,11 @@ public class CenterPanel extends JPanel {
 		this.add(fileListScrollPane,  BorderLayout.CENTER);
 	}
 	
+	public void removeCharacters() {
+		mappedCharacters = new HashMap<String, ArrayList<GlyphPanel>>();
+		fileListArea.removeAll();
+	}
+	
 	public GlyphPanel[] getGlyphPanels() {
 		Component components[] = fileListArea.getComponents();
 		ArrayList<GlyphPanel> gp = new ArrayList<GlyphPanel>();

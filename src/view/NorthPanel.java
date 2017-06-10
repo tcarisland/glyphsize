@@ -4,20 +4,16 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.FolderChooserListener;
-import controller.ResizeItemsListener;
 import controller.ScriptCheckboxListener;
 import controller.WriteScriptCheckboxListener;
-import controller.WriteScriptListener;
 
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 
 public class NorthPanel extends JPanel {
 
@@ -27,8 +23,6 @@ public class NorthPanel extends JPanel {
 	private static final long serialVersionUID = -1931505285368286964L;
 	
 	private JTextField glyphSizeTextField;
-	
-	private JButton btnChooseFolder;
 
 	private JLabel lblSelectAFolder;
 	private JLabel lblFilesFound;
@@ -37,8 +31,6 @@ public class NorthPanel extends JPanel {
 	private JLabel lblDestinationDirectoryPath;
 	private JLabel lblSvgFilesFound;
 	private JLabel lblSvgFilesFoundNumber;
-
-	private JButton btnResizeItems;
 	
 	private File dir;
 	private File destDir;
@@ -52,7 +44,7 @@ public class NorthPanel extends JPanel {
 	private JPanel panel;
 	private JCheckBox chckbxCreateScript;
 	private JCheckBox chckbxExecuteScript;
-	private JButton btnWriteScript;
+	private JLabel lblSourceDirectiry;
 
 	/**
 	 * Create the panel.
@@ -68,21 +60,21 @@ public class NorthPanel extends JPanel {
 		add(directoryPanel);
 		directoryPanel.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		btnChooseFolder = new JButton("Choose Folder");
-		directoryPanel.add(btnChooseFolder);
-		lblSelectAFolder = new JLabel("Select a folder");
-		directoryPanel.add(lblSelectAFolder);
-		
-		lblSelectAFolder.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSourceDirectiry = new JLabel("Source Directory");
+		lblSourceDirectiry.setHorizontalAlignment(SwingConstants.CENTER);
+		directoryPanel.add(lblSourceDirectiry);
 		
 		lblDestinationDirectory = new JLabel("Destination Directory:");
 		directoryPanel.add(lblDestinationDirectory);
 		lblDestinationDirectory.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSelectAFolder = new JLabel("No Folder Selected");
+		directoryPanel.add(lblSelectAFolder);
 		
-		lblDestinationDirectoryPath = new JLabel("");
+		lblSelectAFolder.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblDestinationDirectoryPath = new JLabel("No Folder Selected");
 		directoryPanel.add(lblDestinationDirectoryPath);
 		lblDestinationDirectoryPath.setHorizontalAlignment(SwingConstants.CENTER);
-		btnChooseFolder.addActionListener(new FolderChooserListener(this, grandparent));
 		
 		filesFoundPanel = new JPanel();
 		add(filesFoundPanel);
@@ -123,18 +115,12 @@ public class NorthPanel extends JPanel {
 		chckbxCreateScript = new JCheckBox("Create Script");
 		panel.add(chckbxCreateScript);
 		
-		btnWriteScript = new JButton("Write Script");
-		panel.add(btnWriteScript);
 
-		btnResizeItems = new JButton("Resize Items");
 		chckbxExecuteScript = new JCheckBox("Execute Script");
 		chckbxExecuteScript.setEnabled(false);
-		chckbxCreateScript.addActionListener(new ScriptCheckboxListener(chckbxExecuteScript, this.btnResizeItems));
-		chckbxExecuteScript.addActionListener(new WriteScriptCheckboxListener(chckbxCreateScript, this.btnResizeItems));
-		this.btnWriteScript.addActionListener(new WriteScriptListener(mainPanel));
+		chckbxCreateScript.addActionListener(new ScriptCheckboxListener(chckbxExecuteScript, this.getMainPanel().getSouthPanel().getBtnResizeItems()));
+		chckbxExecuteScript.addActionListener(new WriteScriptCheckboxListener(chckbxCreateScript, this.getMainPanel().getSouthPanel().getBtnResizeItems()));
 		panel.add(chckbxExecuteScript);
-		panel.add(btnResizeItems);
-		btnResizeItems.addActionListener(new ResizeItemsListener(this, grandparent));
 	}
 	/**
 	 * @return the lblSelectAFolder

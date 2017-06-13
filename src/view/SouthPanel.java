@@ -7,6 +7,8 @@ import controller.ResizeItemsListener;
 import controller.WriteScriptListener;
 
 import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -30,6 +32,8 @@ public class SouthPanel extends JPanel {
 		setLayout(new GridLayout(0, 3, 0, 0));
 		this.mainPanel = mainPanel;
 		this.setParentFrame(parent);
+		int bw = 10;
+		this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(bw, bw, bw, bw), BorderFactory.createEtchedBorder()));
 		btnWriteScript = new JButton("Write Script");
 		btnSelectDirectory = new JButton("Select Directory");
 		add(btnSelectDirectory);

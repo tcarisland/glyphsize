@@ -96,14 +96,17 @@ public class CenterPanel extends JPanel {
 			for(int i = 0; i < panels.size(); i++) {
 				GlyphPanel g = panels.get(i);
 				if(g.getNumber() == gp.getNumber()) {
-					panels.remove(g);
-					i++;
+					panels.remove(i);
+					break;
 				}
 			}
 			if(panels.size() < 2) {
 				for(int i = 0; i < panels.size(); i++) {
 					panels.get(i).unmark();
 				}
+			}
+			if(panels.isEmpty()) {
+				mappedCharacters.remove(gp.getGlyph().getUnicode());
 			}
 		}
 	}

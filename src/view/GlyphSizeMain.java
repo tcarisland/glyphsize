@@ -11,7 +11,7 @@ import controller.FolderChooserListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GlyphSize {
+public class GlyphSizeMain {
 
 	private JFrame frame;
 	private MainPanel mainPanel;
@@ -23,7 +23,7 @@ public class GlyphSize {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GlyphSize window = new GlyphSize();
+					GlyphSizeMain window = new GlyphSizeMain();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +35,7 @@ public class GlyphSize {
 	/**
 	 * Create the application.
 	 */
-	public GlyphSize() {
+	public GlyphSizeMain() {
 		initialize();
 	}
 

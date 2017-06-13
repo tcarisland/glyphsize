@@ -39,7 +39,7 @@ public class CharacterLookup {
 	}
 	
 	public static String numToUnicodeString(int number) {
-		return "0u" + Integer.toHexString(number).toUpperCase();
+		return "0u" + Integer.toHexString(number);
 	}
 		
 	public String getUnicodeString(String name) {

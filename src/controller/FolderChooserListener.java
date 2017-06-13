@@ -50,8 +50,8 @@ public class FolderChooserListener implements ActionListener {
 						updatedFileList.add(f);
 				File[] updatedFileListArray = updatedFileList.toArray(new File[updatedFileList.size()]);
 				northpanel.setFiles(updatedFileListArray);
-				northpanel.getLblFilesFoundNumber().setText("" + fileList.length);
-				northpanel.getLblSvgFilesFoundNumber().setText("" + updatedFileList.size());
+				northpanel.getLblFilesFoundNumber().setText("Files Found: " + fileList.length);
+				northpanel.getLblSvgFilesFoundNumber().setText("SVG Files Found: " + updatedFileList.size());
 				northpanel.getMainPanel().updateFileList(updatedFileListArray);
 		} else {
 			lblSelectAFolder.setText("No Directory Selected");

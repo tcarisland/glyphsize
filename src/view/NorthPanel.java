@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import controller.ScriptCheckboxListener;
 import controller.WriteScriptCheckboxListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
@@ -25,11 +26,8 @@ public class NorthPanel extends JPanel {
 	private JTextField glyphSizeTextField;
 
 	private JLabel lblSelectAFolder;
-	private JLabel lblFilesFound;
 	private JLabel lblFilesFoundNumber;
-	private JLabel lblDestinationDirectory;
 	private JLabel lblDestinationDirectoryPath;
-	private JLabel lblSvgFilesFound;
 	private JLabel lblSvgFilesFoundNumber;
 	
 	private File dir;
@@ -39,19 +37,17 @@ public class NorthPanel extends JPanel {
 	private MainPanel mainPanel;
 	private JLabel lblGlyphSize;
 	private JPanel directoryPanel;
-	private JPanel filesFoundPanel;
 	private JPanel glyphSizePanel;
 	private JPanel panel;
 	private JCheckBox chckbxCreateScript;
 	private JCheckBox chckbxExecuteScript;
-	private JLabel lblSourceDirectiry;
 
 	/**
 	 * Create the panel.
 	 * @param mainPanel 
 	 */
 	public NorthPanel(MainPanel mainPanel, JFrame grandparent) {
-		setLayout(new GridLayout(4, 1, 0, 0));
+		setLayout(new GridLayout(3, 1, 0, 0));
 		int bw = 10;
 		this.setBorder(new EmptyBorder(bw, bw, bw ,bw));
 		this.setMainPanel(mainPanel);
@@ -59,42 +55,10 @@ public class NorthPanel extends JPanel {
 		directoryPanel = new JPanel();
 		add(directoryPanel);
 		directoryPanel.setLayout(new GridLayout(2, 2, 0, 0));
-		
-		lblSourceDirectiry = new JLabel("Source Directory");
-		lblSourceDirectiry.setHorizontalAlignment(SwingConstants.CENTER);
-		directoryPanel.add(lblSourceDirectiry);
-		
-		lblDestinationDirectory = new JLabel("Destination Directory:");
-		directoryPanel.add(lblDestinationDirectory);
-		lblDestinationDirectory.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSelectAFolder = new JLabel("No Folder Selected");
-		directoryPanel.add(lblSelectAFolder);
-		
-		lblSelectAFolder.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		lblDestinationDirectoryPath = new JLabel("No Folder Selected");
-		directoryPanel.add(lblDestinationDirectoryPath);
-		lblDestinationDirectoryPath.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		filesFoundPanel = new JPanel();
-		add(filesFoundPanel);
-		filesFoundPanel.setLayout(new GridLayout(2, 2, 0, 0));
-		lblFilesFound = new JLabel("Files found:");
-		filesFoundPanel.add(lblFilesFound);
-		
-		lblFilesFound.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		lblSvgFilesFound = new JLabel("SVG Files Found");
-		filesFoundPanel.add(lblSvgFilesFound);
-		lblSvgFilesFound.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		lblFilesFoundNumber = new JLabel("0");
-		filesFoundPanel.add(lblFilesFoundNumber);
-		lblFilesFoundNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		lblSvgFilesFoundNumber = new JLabel("0");
-		filesFoundPanel.add(lblSvgFilesFoundNumber);
-		lblSvgFilesFoundNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		for(JLabel l : createLabels()) {
+			l.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			directoryPanel.add(l);
+		}
 		
 		glyphSizePanel = new JPanel();
 		add(glyphSizePanel);
@@ -122,6 +86,15 @@ public class NorthPanel extends JPanel {
 		chckbxExecuteScript.addActionListener(new WriteScriptCheckboxListener(chckbxCreateScript, this.getMainPanel().getSouthPanel().getBtnResizeItems()));
 		panel.add(chckbxExecuteScript);
 	}
+	
+	public JLabel[] createLabels() {
+		lblSelectAFolder = new JLabel("No Folder Selected");
+		lblFilesFoundNumber = new JLabel("0");
+		lblDestinationDirectoryPath = new JLabel("No Folder Selected");
+		lblSvgFilesFoundNumber = new JLabel("0");
+		return new JLabel[]{lblSelectAFolder, lblFilesFoundNumber, lblDestinationDirectoryPath, lblSvgFilesFoundNumber};
+	}
+	
 	/**
 	 * @return the lblSelectAFolder
 	 */
@@ -134,18 +107,7 @@ public class NorthPanel extends JPanel {
 	public void setLblSelectAFolder(JLabel lblSelectAFolder) {
 		this.lblSelectAFolder = lblSelectAFolder;
 	}
-	/**
-	 * @return the lblFilesFound
-	 */
-	public JLabel getLblFilesFound() {
-		return lblFilesFound;
-	}
-	/**
-	 * @param lblFilesFound the lblFilesFound to set
-	 */
-	public void setLblFilesFound(JLabel lblFilesFound) {
-		this.lblFilesFound = lblFilesFound;
-	}
+
 	public File[] getFiles() {
 		return files;
 	}
@@ -164,18 +126,7 @@ public class NorthPanel extends JPanel {
 	public void setLblFilesFoundNumber(JLabel lblFilesFoundNumber) {
 		this.lblFilesFoundNumber = lblFilesFoundNumber;
 	}
-	/**
-	 * @return the lblSvgFilesFound
-	 */
-	public JLabel getLblSvgFilesFound() {
-		return lblSvgFilesFound;
-	}
-	/**
-	 * @param lblSvgFilesFound the lblSvgFilesFound to set
-	 */
-	public void setLblSvgFilesFound(JLabel lblSvgFilesFound) {
-		this.lblSvgFilesFound = lblSvgFilesFound;
-	}
+
 	/**
 	 * @return the lblSvgFilesFoundNumber
 	 */
@@ -200,7 +151,7 @@ public class NorthPanel extends JPanel {
 	public void setDir(File dir) {
 		this.dir = dir;
 		try {
-			lblSelectAFolder.setText(dir.getCanonicalPath().toString());
+			lblSelectAFolder.setText("Source Directory: " + dir.getCanonicalPath().toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -212,7 +163,7 @@ public class NorthPanel extends JPanel {
 	public void setDestDir(File destDir) {
 		this.destDir = destDir;
 		try {
-			lblDestinationDirectoryPath.setText(destDir.getCanonicalPath().toString());
+			lblDestinationDirectoryPath.setText("Destination Directory: " + destDir.getCanonicalPath().toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -66,6 +66,7 @@ public class Glyph {
 	 * @param unicode the unicode to set
 	 */
 	public void setUnicode(String unicode) {
+		this.unicodeNumber = Integer.parseInt(unicode.substring(2), 16);
 		this.unicode = unicode;
 	}
 
@@ -94,6 +95,7 @@ public class Glyph {
 	 * @param unicodeNumber the unicodeNumber to set
 	 */
 	public void setUnicodeNumber(int unicodeNumber) {
+		this.unicode = "0u" + Integer.toHexString(unicodeNumber);
 		this.unicodeNumber = unicodeNumber;
 	}
 

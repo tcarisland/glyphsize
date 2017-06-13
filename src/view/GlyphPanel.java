@@ -7,8 +7,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +19,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
@@ -30,7 +34,7 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	 */
 	private static final long serialVersionUID = 2238092138443824374L;
 
-	CenterPanel parent;
+	CenterPanel centerPanel;
 	Glyph glyph;
 	JCheckBox export;
 	
@@ -63,7 +67,7 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 		number = counter++;
 		isDuplicate = false;
 		current = this;
-		this.parent = parent;
+		this.centerPanel = parent;
 		this.setLayout(new BorderLayout());
 		this.file = f;
 		glyph = new Glyph(f, table);
@@ -227,81 +231,75 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			int a, b, c, d, i, sum;
-			a = 33;
-			b = 126;
-			c = 161;
-			d = 255;
-			sum = (b - a) + (d - c) + 2;
+			int cl[] = new int[]{33, 126, 161, 255};
 			setUnicodeDialog = new JDialog();
-			JPanel contentPane = new JPanel();
-			contentPane.setLayout(new BorderLayout());
+			JPanel contentPane = new JPanel(new BorderLayout());
 			setUnicodeDialog.setTitle("Select which character to map");
 			setUnicodeDialog.setSize(getMaximumSize());
-			JPanel setUnicodePanel = new JPanel();
-			int cols = 4;
-			int mod = sum % cols;
-			setUnicodePanel.setLayout(new GridLayout((sum / cols) + mod, cols));
-			for(i = a; i <= b; i++) {
-				JPanel rowPanel = new JPanel();
-				rowPanel.setLayout(new GridLayout(1, 2));
-				String s1 = CharacterLookup.numToUnicodeString(i);
-				String s2 = "" + (char) i;
-				JButton btn = new JButton(s2);
-				btn.addActionListener(new PickUnicodeListener(i));
-				rowPanel.add(new JLabel(s1));
-				rowPanel.add(btn);
-				setUnicodePanel.add(rowPanel);
-			}
-			for(i = c; i <= d; i++) {
-				JPanel rowPanel = new JPanel();
-				rowPanel.setLayout(new GridLayout(1, 2));
-				String s1 = CharacterLookup.numToUnicodeString(i);
-				String s2 = "" + (char) i;
-				JButton btn = new JButton(s2);
-				btn.addActionListener(new PickUnicodeListener(i));
-				rowPanel.add(new JLabel(s1));
-				rowPanel.add(btn);
-				setUnicodePanel.add(rowPanel);
-			}
-			JScrollPane setUnicodeScrollPane = new JScrollPane(setUnicodePanel);
-			JPanel topPanel = new JPanel();			
-			topPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-			topPanel.setLayout(new GridLayout(1, 2));
-			topPanel.add(new JLabel("Which character is this?"));
-			topPanel.add(imageLabel);
-			contentPane.add(setUnicodeScrollPane, BorderLayout.CENTER);
+			ButtonGroup alternatives = new ButtonGroup();
+			JScrollPane centerPanel = this.createCenterPanel(alternatives, cl);
+			JPanel topPanel = this.createTopPanel(alternatives);
+			contentPane.add(centerPanel, BorderLayout.CENTER);
 			contentPane.add(topPanel, BorderLayout.NORTH);
 			setUnicodeDialog.setContentPane(contentPane);
 			setUnicodeDialog.setVisible(true);
 		}
-	}
-	
-	class PickUnicodeListener implements ActionListener {
-
-		int number;
 		
-		public PickUnicodeListener(int number) {
-			this.number = number;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			setUnicodeDialog.setVisible(false);
-			export.setSelected(true);
-			String unicode = CharacterLookup.numToUnicodeString(number);
-			mappingLabel.setText(unicode);
-			if(current.isDuplicate())
-				unmark();
-			parent.removeMapping(current);
-			glyph.setUnicode(unicode);
-			parent.checkDuplicate(current);
-			current.updateImageLabel(current.getFile());
-			current.getImagePanel().add(current.getImageLabel());
-			validate();
-			setUnicodeDialog.dispose();
+		public JScrollPane createCenterPanel(ButtonGroup alternatives, int cl[]) {
+			int sum = cl[1] - cl[0] + cl[3] - cl[2];
+			JPanel setUnicodePanel = new JPanel();
+			setUnicodePanel.setLayout(new GridLayout((sum / 4) + (sum % 4), 4));
+			for(int i = cl[0]; i <= cl[3]; i++) {
+				if(i == (cl[1] + 1))
+					i = cl[2];
+				JPanel rowPanel = new JPanel(new GridLayout(1, 1));
+				JRadioButton btn = new JRadioButton("" + (char) i + " " + CharacterLookup.numToUnicodeString(i));
+				alternatives.add(btn);
+				rowPanel.add(btn);
+				setUnicodePanel.add(rowPanel);
+			}
+			JScrollPane setUnicodeScrollPane = new JScrollPane(setUnicodePanel);
+			return setUnicodeScrollPane;
 		}
 		
+		public JPanel createTopPanel(ButtonGroup alternatives) {
+			JPanel topPanel = new JPanel();			
+			JButton btnSelect = new JButton("Select");
+			topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			topPanel.add(btnSelect);
+			topPanel.setLayout(new GridLayout(1, 4));
+			topPanel.add(current.createImageLabel(current.getFile()));
+			topPanel.add(new JLabel("Which character is this?"));
+			btnSelect.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Enumeration<AbstractButton> buttons = alternatives.getElements();
+					int c = 0;
+					while(buttons.hasMoreElements()) {
+						JRadioButton btn = (JRadioButton) buttons.nextElement();
+						if(btn.isSelected())
+							c = (int) btn.getText().charAt(0);
+					}
+					if(c == current.getGlyph().getUnicodeNumber()) {
+						setUnicodeDialog.dispose();
+						return;
+					}
+					setUnicodeDialog.setVisible(false);
+					export.setSelected(true);					
+					if(current.isDuplicate()) {
+						unmark();
+					}
+					centerPanel.removeMapping(current);
+					current.getGlyph().setUnicode(CharacterLookup.numToUnicodeString(c));
+					mappingLabel.setText(CharacterLookup.numToUnicodeString(c) + " " + (char) c);
+					centerPanel.checkDuplicate(current);
+					current.updateImageLabel(current.getFile());
+					validate();
+					setUnicodeDialog.dispose();
+				}
+			});
+			return topPanel;
+		}
 	}
 
 	/**

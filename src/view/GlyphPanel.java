@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Enumeration;
 
@@ -201,7 +202,11 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	}
 	
 	public void updateImageLabel(File f) {
-		imageLabel.setIcon(new ImageIcon(BufferedImageTranscoder.loadImage(f, 100, 100)));
+		BufferedImage image = BufferedImageTranscoder.loadImage(f, 100, 100);
+		if(image != null)
+			imageLabel.setIcon(new ImageIcon(image));
+		else
+			imageLabel.setText("?");
 	}
 
 	public void setUnicode(String s) {
@@ -233,9 +238,9 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 		public void actionPerformed(ActionEvent event) {
 			int cl[] = new int[]{33, 126, 161, 255};
 			setUnicodeDialog = new JDialog();
-			JPanel contentPane = new JPanel(new BorderLayout());
+			setUnicodeDialog.setSize(800, 800);
+			JPanel contentPane = new JPanel(new BorderLayout());			
 			setUnicodeDialog.setTitle("Select which character to map");
-			setUnicodeDialog.setSize(getMaximumSize());
 			ButtonGroup alternatives = new ButtonGroup();
 			JScrollPane centerPanel = this.createCenterPanel(alternatives, cl);
 			JPanel topPanel = this.createTopPanel(alternatives);
@@ -328,7 +333,7 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 		this.getDuplicatesLabel().setText("No Duplicates");
 		this.mappingLabel.setOpaque(false);
 		this.mappingLabel.setBackground(Color.WHITE);
-		this.imageLabel.setIcon(new ImageIcon(BufferedImageTranscoder.loadImage(file, 100, 100)));
+		this.updateImageLabel(file);
 		this.repaint();
 	}
 

@@ -2,12 +2,15 @@ package controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.apache.commons.io.FileUtils;
 
 public class BufferedImageTranscoder extends ImageTranscoder {
 		private BufferedImage image = null;		
@@ -25,16 +28,21 @@ public class BufferedImageTranscoder extends ImageTranscoder {
 		{
 			return image;
 		}
+		
 		public static BufferedImage loadImage(File svgFile, float width, float height) {
 			BufferedImageTranscoder imageTranscoder = new BufferedImageTranscoder();
 		    imageTranscoder.addTranscodingHint(PNGTranscoder.KEY_WIDTH, width);
 		    imageTranscoder.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, height);
-		    TranscoderInput input = new TranscoderInput(svgFile.getAbsolutePath());
 		    try {
-				imageTranscoder.transcode(input, null);
+		    	InputStream svgStream = FileUtils.openInputStream(svgFile);
+			    TranscoderInput input = new TranscoderInput(svgStream);
+			    imageTranscoder.transcode(input, null);
 			} catch (TranscoderException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return null;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
 			}
 		    return imageTranscoder.getBufferedImage();
 		}

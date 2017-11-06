@@ -13,7 +13,7 @@ public class Glyph {
 	int unicodeNumber;
 	boolean unicodeDefined;
 	
-	public Glyph(File f, CharacterLookup table) {
+	public Glyph(File f, CharTable table) {
 		viewbox = SVGFunctions.getViewboxDimensions(f);
 		this.name = f.getName();
 		this.filename = f.getAbsolutePath();

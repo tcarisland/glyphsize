@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 
 import controller.BufferedImageTranscoder;
 import model.Glyph;
-import model.CharacterLookup;
+import model.CharTable;
 
 public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 
@@ -64,7 +64,7 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 	/**
 	 * Create the panel.
 	 */
-	public GlyphPanel(CenterPanel parent, File f, CharacterLookup table) {
+	public GlyphPanel(CenterPanel parent, File f, CharTable table) {
 		number = counter++;
 		isDuplicate = false;
 		current = this;
@@ -258,7 +258,7 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 				if(i == (cl[1] + 1))
 					i = cl[2];
 				JPanel rowPanel = new JPanel(new GridLayout(1, 1));
-				JRadioButton btn = new JRadioButton("" + (char) i + " " + CharacterLookup.numToUnicodeString(i));
+				JRadioButton btn = new JRadioButton("" + (char) i + " " + CharTable.numToUnicodeString(i));
 				alternatives.add(btn);
 				rowPanel.add(btn);
 				setUnicodePanel.add(rowPanel);
@@ -295,8 +295,8 @@ public class GlyphPanel extends JPanel implements Comparable<GlyphPanel> {
 						unmark();
 					}
 					centerPanel.removeMapping(current);
-					current.getGlyph().setUnicode(CharacterLookup.numToUnicodeString(c));
-					mappingLabel.setText(CharacterLookup.numToUnicodeString(c) + " " + (char) c);
+					current.getGlyph().setUnicode(CharTable.numToUnicodeString(c));
+					mappingLabel.setText(CharTable.numToUnicodeString(c) + " " + (char) c);
 					centerPanel.checkDuplicate(current);
 					current.updateImageLabel(current.getFile());
 					validate();

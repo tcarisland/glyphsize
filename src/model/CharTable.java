@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class CharacterLookup {
+public class CharTable {
 
 	public static HashMap<String, HashSet<String>> table;
 	public static final int ISO8859_LATIN1_NUMCHARS = 256;
 	
-	public CharacterLookup(String type) {
+	public CharTable(String type) {
 		table = new HashMap<String, HashSet<String>>();
 		if(type.equals("ISO 8859-1")) {
 			try {

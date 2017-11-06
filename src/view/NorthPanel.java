@@ -163,12 +163,15 @@ public class NorthPanel extends JPanel {
 	public void setDestDir(File destDir) {
 		this.destDir = destDir;
 		try {
-			lblDestinationDirectoryPath.setText("Destination Directory: " + destDir.getCanonicalPath().toString());
+			lblDestinationDirectoryPath.setText(destDir.getCanonicalPath().toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
+	//059280
+	//9fbq5h97ei8
+	//192.168.8.1
 	/**
 	 * @return the lblDestinationDirectoryPath
 	 */

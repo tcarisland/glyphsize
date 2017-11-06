@@ -1,6 +1,6 @@
 package view;
 
-import model.CharacterLookup;
+import model.CharTable;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -67,7 +67,7 @@ public class CenterPanel extends JPanel {
 		fileListScrollPane.invalidate();		
 		fileListArea.invalidate();
 		fileListArea.removeAll();
-		CharacterLookup lookup = new CharacterLookup("ISO 8859-1");
+		CharTable lookup = new CharTable("ISO 8859-1");
 		if(files.length != 0) {
 			fileListArea.setLayout(new GridLayout(files.length, 1));
 			for(File f : files) {
